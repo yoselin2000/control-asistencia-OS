@@ -14,9 +14,17 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Asistencia') }}
                     </x-nav-link>
                 </div>
+                @if(auth()->user()->hasRole('admin'))
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('attendance.report') }}" :active="request()->routeIs('attendance.report')">
+                        {{ __('Reporte') }}
+                    </x-nav-link>
+                </div>
+                @endif
+                
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">

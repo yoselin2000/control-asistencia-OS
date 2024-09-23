@@ -19,3 +19,4 @@ Route::middleware([
 
 Route::post('/mark-entry', [AttendanceController::class, 'markEntry'])->name('attendance.markEntry');
 Route::post('/mark-exit', [AttendanceController::class, 'markExit'])->name('attendance.markExit');
+Route::get('/report', [AttendanceController::class, 'report'])->name('attendance.report');
