@@ -32,15 +32,6 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                @if(auth()->user()->hasRole('admin'))
-                    <div class="mt-6"></div>
-                    <form action="{{ route('attendance.report') }}" method="GET">
-                        @csrf
-                        <button type="submit" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
-                            Reporte
-                        </button>
-                    </form>
-                @endif
             </div>
         </div>
     </div>
