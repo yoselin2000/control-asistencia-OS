@@ -28,7 +28,7 @@
             </div>
             
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Actualizar Rol</button>
+                <button type="submit" class="btn btn-success">Actualizar Rol</button>
                 <a href="{{ route('roles.index') }}" class="btn btn-danger">Cancelar</a>
             </div>
         </form>

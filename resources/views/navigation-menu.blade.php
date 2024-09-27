@@ -25,6 +25,9 @@
                         <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
                             {{ __('Usuarios') }}
                         </x-nav-link>
+                        <x-nav-link href="{{ route('settings.index') }}" :active="request()->routeIs('settings.index')">
+                            {{ __('IPs') }}
+                        </x-nav-link>
                     </div>
                 @endif
             </div>
@@ -154,18 +157,21 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             @if(auth()->user()->hasRole('admin'))
-            <x-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')" class="text-gray-700 hover:bg-gray-200 block px-4 py-2">
+                <x-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')" class="text-gray-700 hover:bg-gray-200 block px-4 py-2">
                     {{ __('Usuarios') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link href="{{ route('attendance.report') }}" :active="request()->routeIs('attendances.*')" class="text-gray-700 hover:bg-gray-200 block px-4 py-2">
                     {{ __('Reportes') }}
                 </x-responsive-nav-link>
-                <!-- <x-responsive-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles.*')" class="text-gray-700 hover:bg-gray-200 block px-4 py-2">
+                <x-responsive-nav-link href="{{ route('settings.index') }}" :active="request()->routeIs('settings.*')" class="text-gray-700 hover:bg-gray-200 block px-4 py-2">
+                    {{ __('IPs') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles.*')" class="text-gray-700 hover:bg-gray-200 block px-4 py-2">
                     {{ __('Roles') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link href="{{ route('permissions.index') }}" :active="request()->routeIs('permissions.*')" class="text-gray-700 hover:bg-gray-200 block px-4 py-2">
                     {{ __('Permisos') }}
-                </x-responsive-nav-link> -->
+                </x-responsive-nav-link>
             @endif
         </div>
 

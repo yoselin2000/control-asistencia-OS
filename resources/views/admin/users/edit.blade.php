@@ -38,7 +38,7 @@
             </div>
             
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                <button type="submit" class="btn btn-success">Actualizar Usuario</button>
                 <a href="{{ route('users.index') }}" class="btn btn-danger">Cancelar</a>
             </div>
         </form>
