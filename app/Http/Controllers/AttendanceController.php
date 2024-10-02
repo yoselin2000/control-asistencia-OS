@@ -19,37 +19,69 @@ class AttendanceController extends Controller
         $this->middleware('can:mark exit')->only('markExit');
     }
 
+    // public function markEntry(Request $request)
+    // {
+    //     $user = Auth::user();
+    //     $now = now();
+    //     $userIp = $request->ip();
+    //     \Log::info('User IP: ' . $userIp);
+
+    //     $allowedRange = Setting::where('key', 'allowed_ip_range')->value('value');
+    //     $expectedSSID = Setting::where('key', 'ssid')->value('value');
+
+    //     $ssid = $this->getSSID();
+
+    //     if ($ssid !== $expectedSSID) {
+    //         return redirect()->back()->with('error', 'Debes estar conectado a la red correcta para marcar la entrada.');
+    //     }
+
+    //     if ($userIp !== '127.0.0.1' && $userIp !== 'localhost' && strpos($userIp, $allowedRange) !== 0) {
+    //         return redirect()->back()->with('error', 'Debes estar conectado a la red de la oficina para marcar la entrada.');
+    //     }
+
+    //     $attendance = Attendance::updateOrCreate(
+    //         ['user_id' => $user->id, 'left_at' => null],
+    //         [
+    //             'marked_at' => $now,
+    //             'user_name' => $user->name,
+    //             'user_ip' => $userIp
+    //         ]
+    //     );
+
+    //     return redirect()->back()->with('message', 'Entrada marcada correctamente para ' . $user->name . ' el ' . $attendance->marked_at->format('d/m/Y') . ' a las ' . $attendance->marked_at->format('H:i'));
+    // }
+
     public function markEntry(Request $request)
     {
         $user = Auth::user();
-    $now = now();
-    $userIp = $request->ip();
-    \Log::info('User IP: ' . $userIp);
+        $now = now();
+        $userIp = $request->ip();
 
-    $allowedRange = Setting::where('key', 'allowed_ip_range')->value('value');
-    $expectedSSID = Setting::where('key', 'ssid')->value('value');
+        $branch = $user->branch;
 
-    $ssid = $this->getSSID();
+        if (!$branch) {
+            return redirect()->back()->with('error', 'No perteneces a ninguna sucursal.');
+        }
 
-    if ($ssid !== $expectedSSID) {
-        return redirect()->back()->with('error', 'Debes estar conectado a la red correcta para marcar la entrada.');
-    }
+        $expectedSSID = $branch->ssid;
 
-    if ($userIp !== '127.0.0.1' && $userIp !== 'localhost' && strpos($userIp, $allowedRange) !== 0) {
-        return redirect()->back()->with('error', 'Debes estar conectado a la red de la oficina para marcar la entrada.');
-    }
+        $currentSSID = $this->getSSID();
 
-    $attendance = Attendance::updateOrCreate(
-        ['user_id' => $user->id, 'left_at' => null],
-        [
+        if ($currentSSID !== $expectedSSID) {
+            return redirect()->back()->with('error', 'Debes estar conectado a la red de tu sucursal para marcar la entrada.');
+        }
+
+        $attendance = Attendance::create([
+            'user_id' => $user->id,
+            'branch_id' => $branch->id, 
             'marked_at' => $now,
             'user_name' => $user->name,
             'user_ip' => $userIp
-        ]
-    );
+        ]);
 
-    return redirect()->back()->with('message', 'Entrada marcada correctamente para ' . $user->name . ' el ' . $attendance->marked_at->format('d/m/Y') . ' a las ' . $attendance->marked_at->format('H:i'));
+        return redirect()->back()->with('message', 'Entrada marcada correctamente para ' . $user->email . ' el ' . $attendance->marked_at->format('d/m/Y') . ' a las ' . $attendance->marked_at->format('H:i'));
     }
+
 
     /**
      * Obtener el SSID de la red Wi-Fi.
@@ -77,6 +109,8 @@ class AttendanceController extends Controller
         return $ssid;
     }
 
+
+
     public function markExit()
     {
         $user = Auth::user();
@@ -86,7 +120,7 @@ class AttendanceController extends Controller
 
         if ($attendance) {
             $attendance->update(['left_at' => now()]);
-            $message = 'Salida marcada correctamente para el ' . $attendance->left_at->format('d/m/Y') . ' a las ' . $attendance->left_at->format('H:i');
+            $message = 'Salida marcada correctamente para '. $user->email . ' el ' . $attendance->left_at->format('d/m/Y') . ' a las ' . $attendance->left_at->format('H:i');
             return redirect()->back()->with('message', $message);
         } else {
             return redirect()->back()->with('error', 'No se ha encontrado un registro de entrada.');

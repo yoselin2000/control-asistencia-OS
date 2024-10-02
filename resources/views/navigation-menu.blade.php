@@ -17,18 +17,29 @@
                         {{ __('Asistencia') }}
                     </x-nav-link>
                 </div>
-                @if (auth()->check() && auth()->user()->hasRole('admin'))
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="{{ route('attendance.report') }}" :active="request()->routeIs('attendance.report')">
-                            {{ __('Reporte') }}
-                        </x-nav-link>
-                        <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
-                            {{ __('Usuarios') }}
-                        </x-nav-link>
-                        <x-nav-link href="{{ route('settings.index') }}" :active="request()->routeIs('settings.index')">
-                            {{ __('IPs') }}
-                        </x-nav-link>
-                    </div>
+                @if (auth()->check())
+                    @if (auth()->user()->hasRole('super admin'))
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles.index')">
+                                {{ __('Roles') }}
+                            </x-nav-link>
+                            <x-nav-link href="{{ route('branches.index') }}" :active="request()->routeIs('branches.index')">
+                                {{ __('Sucursal') }}
+                            </x-nav-link>
+                            <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
+                                {{ __('Usuarios') }}
+                            </x-nav-link>
+                            <x-nav-link href="{{ route('attendance.report') }}" :active="request()->routeIs('attendance.report')">
+                                {{ __('Reporte') }}
+                            </x-nav-link>
+                        </div>
+                        @elseif (auth()->user()->hasRole('admin'))
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link href="{{ route('attendance.report') }}" :active="request()->routeIs('attendance.report')">
+                                {{ __('Reporte') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
                 @endif
             </div>
 

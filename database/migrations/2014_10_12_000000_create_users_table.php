@@ -21,6 +21,11 @@ return new class extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
+            $table->unsignedBigInteger('branch_id')->nullable();;
+
+            $table->foreign('branch_id')->references('id')->on('branches')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

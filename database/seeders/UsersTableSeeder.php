@@ -17,37 +17,33 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // User::create([
-        //     'name' => 'Yoselin',
-        //     'email' => 'yoselin@gmail.com',
-        //     'password' => Hash::make('password123'), 
-        // ]);
-
-        // User::create([
-        //     'name' => 'Juan',
-        //     'email' => 'juan@gmail.com',
-        //     'password' => Hash::make('password456'),
-        // ]);
 
         $adminRole = Role::findByName('admin', 'web');
         $userRole = Role::findByName('user', 'web');
+        $superAdminRole = Role::findByName('super admin', 'web');
 
         // Crear el usuario admin
-        $admin = User::create([
+        $superAdminUser = User::create([
+            'name' => 'Yoselin',
+            'email' => 'yoselin@gmail.com',
+            'password' => bcrypt('password'),
+        ]);
+        $superAdminUser->assignRole($superAdminRole); // Asignar el rol de super admin al usuario
+    
+        // Crear el usuario admin
+        $adminUser = User::create([
             'name' => 'Admin User',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('password'),
         ]);
-
-        $admin->assignRole($adminRole);
-
-        $user = User::create([
+        $adminUser->assignRole($adminRole); // Asignar el rol de admin al usuario
+    
+        // Crear el usuario regular
+        $regularUser = User::create([
             'name' => 'Regular User',
             'email' => 'user@gmail.com',
             'password' => bcrypt('password'),
         ]);
-
-        // Asignar el rol de usuario común
-        $user->assignRole($userRole);
+        $regularUser->assignRole($userRole);
     }
 }

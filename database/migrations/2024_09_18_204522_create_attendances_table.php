@@ -15,12 +15,21 @@ class CreateAttendancesTable extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('user_name');
             $table->timestamp('marked_at')->nullable();
             $table->timestamp('left_at')->nullable();
             $table->string('user_ip')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('branch_id');
             // $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+                $table->foreign('branch_id')->references('id')->on('branches')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

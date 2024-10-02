@@ -1,7 +1,8 @@
 <?php
 
 namespace Database\Seeders;
-
+use Database\Seeders\RolesAndPermissionsSeeder;
+use Database\Seeders\UsersTableSeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

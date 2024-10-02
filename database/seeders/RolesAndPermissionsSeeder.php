@@ -14,25 +14,16 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         Permission::create(['name' => 'mark entry']);
         Permission::create(['name' => 'mark exit']);
-        Permission::create(['name' => 'view all attendances']);
+        Permission::create(['name' => 'view reports']);
 
-        // Crear rol de administrador con todos los permisos
+        // Crear roles
         $adminRole = Role::create(['name' => 'admin']);
-        $adminRole->givePermissionTo(Permission::all());
-
-        // Crear rol de usuario común con permisos limitados
         $userRole = Role::create(['name' => 'user']);
+        $superAdminRole = Role::create(['name' => 'super admin']);
+
+        // Asignar permisos a los roles
+        $adminRole->givePermissionTo(['mark entry', 'mark exit', 'view reports']);
         $userRole->givePermissionTo(['mark entry', 'mark exit']);
-
-        // Asignar roles a usuarios
-        $user = User::find(1); 
-        if ($user) {
-            $user->assignRole('admin'); // Asignar rol de admin al usuario con ID 1
-        }
-
-        $anotherUser = User::find(2); 
-        if ($anotherUser) {
-            $anotherUser->assignRole('user'); // Asignar rol de usuario común al usuario con ID 2
-        }
+        $superAdminRole->givePermissionTo(Permission::all()); 
     }
 }

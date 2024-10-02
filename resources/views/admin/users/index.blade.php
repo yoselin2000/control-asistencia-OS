@@ -14,6 +14,7 @@
                         <th>Nombre</th>
                         <th>Email</th>
                         <th>Rol</th>
+                        <th>Sucursal</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -24,11 +25,12 @@
                             <td>{{ $user->email }}</td>
                             <td>
                                 @if ($user->getRoleNames()->isNotEmpty())
-                                    {{ $user->getRoleNames()->join(', ') }} <!-- Mostrar roles, en caso de tener varios -->
+                                    {{ $user->getRoleNames()->join(', ') }} 
                                 @else
                                     Sin rol
                                 @endif
                             </td>
+                            <td>{{ $user->branch ? $user->branch->name : 'Sin Sucursal' }}</td>
                             <td class="text-center">
                                 <a href="{{ route('users.edit', $user) }}" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i>

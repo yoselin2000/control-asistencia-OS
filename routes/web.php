@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\BranchController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,10 +51,6 @@ Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.e
 Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
 Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
-// Route::get('/settings', [SettingsController::class, 'show'])->name('settings.show');
-// Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
-// Route::get('/settings', [SettingsController::class, 'edit'])->name('settings.edit');
-
 
 Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
 Route::get('/settings/create', [SettingsController::class, 'create'])->name('settings.create');
@@ -62,3 +59,12 @@ Route::get('/settings/{setting}', [SettingsController::class, 'show'])->name('se
 Route::get('/settings/{setting}/edit', [SettingsController::class, 'edit'])->name('settings.edit');
 Route::put('/settings/{setting}', [SettingsController::class, 'update'])->name('settings.update');
 Route::delete('/settings/{setting}', [SettingsController::class, 'destroy'])->name('settings.destroy');
+
+
+Route::get('/branches', [BranchController::class, 'index'])->name('branches.index');
+Route::get('/branches/create', [BranchController::class, 'create'])->name('branches.create');
+Route::post('/branches', [BranchController::class, 'store'])->name('branches.store');
+Route::get('/branches/{branch}', [BranchController::class, 'show'])->name('branches.show');
+Route::get('/branches/{branch}/edit', [BranchController::class, 'edit'])->name('branches.edit');
+Route::put('/branches/{branch}', [BranchController::class, 'update'])->name('branches.update');
+Route::delete('/branches/{branch}', [BranchController::class, 'destroy'])->name('branches.destroy');
